@@ -3,7 +3,6 @@
 .RData
 .Ruserdata
 *.Rproj
-*.Data
-*.processed_data
-*.results
-*.doc
+data/*
+processed_data/*
+results/*
