@@ -6,9 +6,13 @@ wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs
 wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/Data/2020_378_S8_R1.fastq.gz
 wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/Data/2020_378_S8_R2.fastq.gz
 
+mv *fastq.gz  data
+
 #download publicly available ATAC-seq data
 #GSM2260235: Col-0_50k_root_nuclei_FANS-ATAC-seq_rep1; Arabidopsis thaliana; OTHER(SRR4000472)
 fastq-dump --split-files SRR4000472
+
+mv *fastq data
 
 #download reference genome and annotations from  ENSEMBL database
 wget http://ftp.ebi.ac.uk/ensemblgenomes/pub/release-51/plants/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
