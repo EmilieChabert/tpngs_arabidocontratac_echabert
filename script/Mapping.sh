@@ -26,11 +26,12 @@ done
 # very sensitive --> mapping des petits reads
 # -X 2000 --> besoin d'autoriser des grandes distances entre le debut de R1 et R2 car il peut y avoir plusieurs nucleosomes dans le fragment
 
+
+#analyse de la distribution des reads sur les chromosomes, genome mitochondrial et genome chloroplastique
 for bamfile in processed_data/mapping/*bam
 do 
   samtools index ${bamfile}
   samtools idxstats ${bamfile}
 done
-
 #plus rapide si samtools idstats utilise un index 
 #cree un fichier dans le même dossier
