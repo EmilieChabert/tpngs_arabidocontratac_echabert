@@ -25,3 +25,20 @@ gunzip data/*
 
 #download regions of the genome that can induce a bias in the analysis
 wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/Supporting_files/TAIR10_selectedRegions.bed
+
+#Download the script for the control quality of the ATAC-seq
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Scripts/atac_qc.sh
+mv atac_qc.sh script
+
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Scripts/plot_tlen.R
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Scripts/plot_tss_enrich.R
+mv plot_tlen.R script
+mv plot_tss_enrich.R script
+
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Supporting_files/TAIR10_ChrLen.bed
+mv TAIR10_ChrLen.bed A_thaliana_genome
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Supporting_files/TAIR10_ChrLen.txt
+mv TAIR10_ChrLen.txt A_thaliana_genome
+
+wget --user='tp_ngs' --password='Arabido2021!' https://flower.ens-lyon.fr/tp_ngs/arabidocontratac/Data/2020_374_S4.corrected.bam
+mv 2020_374_S4.corrected.bam processed_data/filtered_data

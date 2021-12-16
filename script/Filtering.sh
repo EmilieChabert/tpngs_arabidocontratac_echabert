@@ -16,10 +16,12 @@ do
 done
 
 
-# Enlever le genome mitochondrial et chloroplastique
+# Enlever le genome mitochondrial et chloroplastique du fichier contenant les regions a garder
 
 grep -v -E "Mt|Pt" A_thaliana_genome/TAIR10_selectedRegions.bed > A_thaliana_genome/TAIR10_selectedRegions_nuc.bed
-#sélectionne les deux lignes contenant termes/ -v tout sauf ça
+#grep --> cherche les chaines de caracteres
+#-v tout sauf ça
+# -E --> regarder les deux motifs Mt et Pt en meme temps
 
 
 #Filtrer
@@ -33,7 +35,11 @@ do
       
 done
 
-# -L A_thaliana_genome/TAIR10_selectedRegions_nuc.bed --> enlever le genome mitochondrial et chloroplastique
+#samtools view --> ouvrir les dossiers SAM
+# -L A_thaliana_genome/TAIR10_selectedRegions_nuc.bed --> garder uniquement les regions de ce fichier
 # -F 1024 --> enleve les reads dupliques
 # -f 3 --> garde les read paired et  read mapped in proper pair
 # -q 30 --> reads de qualite MAPQ > 30
+
+mkdir -p processed_data/filtered_data
+cp processed_data/mapping/*filtered.bam processed_data/filtered_data
