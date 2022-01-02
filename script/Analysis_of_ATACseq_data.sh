@@ -68,7 +68,25 @@ bedtools merge -i ${outputDir}/quiescentcells.common.peaks.sorted.txt -c 4 -o "c
 #Voir script R Analysis_comparison pour le traitement de ce fichier 
 # --> fichier quiescentcells.unique.common.peaks.treated.txt avec les pics communs à au moins deux echantillons
 
+# ------------------------------------------------------------------------------------------------------------ #
+# --------------------------- Annotations genes pics uniques des cellules quiescentes  --------------------------- #
+# ------------------------------------------------------------------------------------------------------------ #
 
+bedtools closest -a ${outputDir}/quiescentcells.unique.common.peaks.treated.txt -b ${gtf_filtered} -D a > ${outputDir}/quiescentcells.unique.common.peaks.nearest.genes.txt 
+#-D --> distance genes et pics, precise si le pic est avant ou apres le gene
+
+# ------------------------------------------------------------------------------------------------------------ #
+# --------------------------- Pics uniques au racine entiere  --------------------------- #
+# ------------------------------------------------------------------------------------------------------------ #
+racine=${workingDir}/processed_data/Peak_calling/2020_374_S4.corrected_peaks.broadPeak
+quiescenttot=${workingDir}/processed_data/Analysis/quiescentcells.unique.common.peaks.treated.txt
+
+racinename=${racine##${workingDir}/processed_data/Peak_calling/}
+racinename=${racinename%%.corrected_peaks.broadPeak}
+
+bedtools intersect -a ${racine} -b ${quiescenttot} -v > ${outputDir}/${racinename}.unique.peaks.txt 
+
+bedtools closest -a ${outputDir}/${racinename}.unique.peaks.txt -b ${gtf_filtered} -D a > ${outputDir}/${racinename}.unique.peaks.nearest.genes.txt 
 
 # End of the script \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

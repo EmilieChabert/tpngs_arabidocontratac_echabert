@@ -1,14 +1,16 @@
+#!/bin/bash
+#
 #Enlever le genome non chromosomique
 #reads qui ont pas mapper
 # reads de mauvaise qualite 
 #regions blacklistees
 # reads dupliques
 
-#Marquer les duplicats de PCR
+###Marquer les duplicats de PCR
 for mapfile in processed_data/mapping/*bam
 
 do
-  java -jar $PICARD MarkDuplicates \
+  java -jar  $PICARD MarkDuplicates\
       I=${mapfile} \
       O=${mapfile/".bam"/"marked_duplicates.bam"} \
       M=${mapfile/".bam"/"marked_dup_metrics.txt"}
@@ -16,7 +18,7 @@ do
 done
 
 
-# Enlever le genome mitochondrial et chloroplastique du fichier contenant les regions a garder
+###Enlever le genome mitochondrial et chloroplastique du fichier contenant les regions a garder
 
 grep -v -E "Mt|Pt" A_thaliana_genome/TAIR10_selectedRegions.bed > A_thaliana_genome/TAIR10_selectedRegions_nuc.bed
 #grep --> cherche les chaines de caracteres
@@ -24,7 +26,7 @@ grep -v -E "Mt|Pt" A_thaliana_genome/TAIR10_selectedRegions.bed > A_thaliana_gen
 # -E --> regarder les deux motifs Mt et Pt en meme temps
 
 
-#Filtrer
+###Filtrer
 for mapfile in processed_data/mapping/*duplicates.bam
 
 do

@@ -3,7 +3,6 @@
 # Peak_calling
 # 
 
-# General variables
 workingDir=/home/rstudio/mydatalocal/tpngs_arabidocontratac_echabert
 outputDir=${workingDir}/processed_data/Peak_calling
 
