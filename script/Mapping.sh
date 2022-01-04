@@ -3,7 +3,7 @@
 # Mappage des reads sur le genome de A.thaliana
 # 
 
-###Construction d'un index à partir du génome de référence --> mapping plus rapide
+### 1. Construction d'un index à partir du génome de référence --> mapping plus rapide
 workdir=/home/rstudio/mydatalocal/tpngs_arabidocontratac_echabert/A_thaliana_genome/
 indexdir=/home/rstudio/mydatalocal/tpngs_arabidocontratac_echabert/A_thaliana_genome/index
 mkdir -p ${indexdir} #creation dossier index
@@ -15,7 +15,7 @@ outputDir=${workingDir}/processed_data/mapping
 cd ${workingDir}
 #////////////////////// Start of the script
 
-###Mapping the reads on the reference genome
+### 2. Mapping the reads on the reference genome
 
 mkdir -p ${outputDir}
 
@@ -38,7 +38,7 @@ done
 # | evite la formation de nombreux fichiers intermediaires --> conversion directe en fichier bam et triage
 
 
-###Analyse de la distribution des reads sur les chromosomes, genome mitochondrial et genome chloroplastique
+### 3. Analyse de la distribution des reads sur les chromosomes, genome mitochondrial et genome chloroplastique
 for bamfile in ${outputDir}/*sorted.bam
 do 
   echo ${bamfile}
