@@ -69,7 +69,7 @@ sort -k1,1 -k2,2n ${outputDir}/tss_${width}.bed > ${outputDir}/tss_${width}.test
 
 tssFile=${outputDir}/tss_${width}.test
 head ${tssFile}
-
+#tss_1000.bed = chromosome, intervalle, gène associé au TSS, direction du gène
 
 #2. Compute TSS enrichment
 echo "-------- Compute per-base coverage around TSS"
@@ -82,7 +82,7 @@ bedtools coverage -a ${tssFile} -b ${bam} -d -sorted > ${outputDir}/${ID}_tss_de
 awk -v w=${width} ' BEGIN { FS=OFS="\t" } { if ($5=="-") $6=(2*w)-$6+1 ; print $0 } ' ${outputDir}/${ID}_tss_depth.txt > ${outputDir}/${ID}_tss_depth.reoriented.txt
 #awk -- >manipuler les tableaux en bash
 
-#tri les donnes en function de leur position dans la sequence
+#tri les donnees en function de leur position dans la sequence
 sort -n -k 6 ${outputDir}/${ID}_tss_depth.reoriented.txt > ${outputDir}/${ID}_tss_depth.sorted.txt
 
 #aditionne le nombre de matchs pour tous les TSS pour chaque position 
@@ -92,7 +92,7 @@ bedtools groupby -i ${outputDir}/${ID}_tss_depth.sorted.txt -g 6 -c 7 -o sum > $
 norm_factor=`awk -v w=${width} -v f=${flanks} '{ if ($6<f || $6>(2*w-f)) sum+=$7 } END { print sum/(2*f) } ' ${outputDir}/${ID}_tss_depth.sorted.txt`
 echo "Nf: " ${norm_factor}
 
-#normalise les donnes pour chaque position, centre les donees sur le TSS
+#normalise les donnees pour chaque position, centre les donnees sur le TSS
 awk -v w=${width} -v f=${flanks} '{ if ($1>f && $1<(2*w-f)) print $0 }' ${outputDir}/${ID}_tss_depth_per_position.sorted.txt | awk -v nf=${norm_factor} -v w=${width} 'BEGIN { OFS="\t" } { $1=$1-w ; $2=$2/nf ; print $0 }' > ${outputDir}/${ID}_tss_depth_per_position.normalized.txt
 
 Rscript ${scriptDir}/plot_tss_enrich.R -f ${outputDir}/${ID}_tss_depth_per_position.normalized.txt -w ${width} -o ${outputDir}  
@@ -106,6 +106,9 @@ Rscript ${scriptDir}/plot_tss_enrich.R -f ${outputDir}/${ID}_tss_depth_per_posit
 echo "-------- Compute insert size distribution"
 samtools view -f 3 -F 16 -L ${chrArabido} -s 0.25 ${bam} | awk ' function abs(v){ return v < 0 ? -v : v } { print abs($9) } ' | sort -g | uniq -c | sort -k2 -g > ${outputDir}/${ID}_TLEN_1-5.txt
 Rscript ${scriptDir}/plot_tlen.R -f ${outputDir}/${ID}_TLEN_1-5.txt -o ${outputDir}
+#f 3 --> conserve les reads pairés correctement
+# calcul la distance entre les reads pairés
+
 
 
 
