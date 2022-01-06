@@ -76,13 +76,31 @@ Fichier de sortie: nom_tss_depth_per_position.normalized.txt
 Calcul de la distance entre les reads pairés en manipulant le fichier BAM avec samtools view et awk (nom_TLEN_1-5.txt)
 Visualisation en utilisant le script plot_tlen.R donnant la densité en fonction de la taille des inserts
 
-#Peak calling
-Script: Peak_calling.sh
-Fonction: masc2 callpeak --> détecte les régions enrichies en reads dans le génome
-Paramètres: 
-Sortie: 
+#Identification des régions de la chromatine ouvertes dans le génome
+Nous avons utilisé la méthode du peak calling pour identifier les régions ouvertes de la chromatine. Les régions ouvertes de la chromatine sont plus accessible pour la transposase et sont donc enrichies en reads. Le peak calling donne les régions où une forte fréquence de reads ont mappés (pics). 
 
-#Fonctions des gènes dans les régions chromatiniennes spécifiquement ouvertes dans les cellules quiescentes 
+Script: Peak_calling.sh
+Fonction et output: masc2 callpeak --> plusieurs fichiers, en particulier .broadPeak contient la localisation des pics (chromossome + intervalles + taille) et des informations statistiques comme la pvalue
+La visualisation des pics (fichier .broadPeak) se fait sur IGV (Integrative Genomics Viewer). Télécharger également les données filtrées au préalable indexer pour visualiser les reads et leurs fréquences sur le génome (.2019_006_S6_Rsortedmarked_duplicatesfiltered)
+
+#Fonctions des gènes dans les régions chromatiniennes spécifiquement ouvertes dans les cellules quiescentes
 Script: Analysis_of_ATACseq_data.sh
-Sortie: 
+
+1. Filtrage du génome de référence
+Nous n'avons retenu que les annotations concernant les gènes nucléaires
+
+2. Identification des gènes les plus proches des pics
+Données d'entrée: pics d'enrichissement en reads identifiés lors du peak calling + génome de référence filtré
+Fonction utilisé et output: bedtools closest --> associe à chaque pic le nom du gène le plus proche et indique également la distance entre le pic et le gène (une distance de 0 signifie que le pic et le gène s'overlappent)
+
+3. Identification des pics présent uniquement dans les cellules quiescents
+Fonction utilisé et output: bedtools intersect (compare les pics présent dans les données d'ATAC-seq des cellules quiescentes et les données sur la racine entière) --> liste des pics uniques aux cellules quiescentes
+Pour la suite de l'analyse nous avons choisi de sélectionner uniquement les pics présent dans au moins deux sur trois des sets de données sur les cellules quiescentes en utilisant le script Analyse_compatison.R (.quiescentcells.unique.common.peaks.treated.txt)
+
+4. Identification des gènes présentant une chromatine plus ouverte dans les cellules quiescentes
+Nous avons sélectionner les pics overlappant avec les gènes, c'est-à-dire présentant une distance égale à 0 (script Analysis_comparison.R). A noter que ce critère sélectionne différents cas de figure: un pic overlappant avec le début, le corps ou la fin du gène. Le mieux serait de sélectionner uniquement les pics se situant proche du TSS. Mais par manque de temps, nous avons continué avec ces données tout en sachant que la sélection était imparfaite (quiescentcells.unique.common.peaks.distance0.txt) 
+
+Nous avons utilisé geneontology pour analyser les fonctions des gènes trouvés. Pour comparer, nous avons effectué le même traitement sur les données de racine entière et identifié les gènes présentant des pics non présentant dans les cellules quiescentes
+
+
 
