@@ -1,8 +1,12 @@
 # Projet Arabidocontratac : Chromatin state of the organizing center of A. thaliana root meristem
 
+CHABERT Emilie
+
 Objectif: Analyse des états chromatiniens des cellules quiescentes du méristème racinaire apical de Arabidopsis thaliana
 
 Méthode: Récupération des cellules quiescentes de la racine par INTACT, puis réalisation d'une ATAC-seq
+
+Dans la suite, je présente les fonctions pour le traitement et l'analyse des données d'ATAC-seq.
 
 # Télécharger les données d'ATAQ-seq et autres fichiers nécessaires pour l'analyse
 
