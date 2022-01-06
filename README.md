@@ -1,12 +1,13 @@
-# Projet Arabidocontratac
-#Chromatin state of the organizing center of A. thaliana root meristem
+# Projet Arabidocontratac : Chromatin state of the organizing center of A. thaliana root meristem
 
 Objectif: Analyse des états chromatiniens des cellules quiescentes du méristème racinaire apical de Arabidopsis thaliana
 
 Méthode: Récupération des cellules quiescentes de la racine par INTACT, puis réalisation d'une ATAC-seq
 
-#Télécharger les données d'ATAQ-seq et autres fichiers nécessaires pour l'analyse
+# Télécharger les données d'ATAQ-seq et autres fichiers nécessaires pour l'analyse
+
 Script : download data.sh 
+
 Fonctions utilisées: wget lien_internet --> recupère le fichier à cette adresse internet // fastq-dump --> récupérer des séquences fastq à partir de leur SRA
 
 Les données d'ATAC téléchargées sont:
@@ -22,13 +23,16 @@ Autres fichiers:
 * Script pour l'analyse qualité control de l'ATAC-seq fourni par Alice Hugues: atac_qc.sh,plot_tlen.R, plot_tss_enrich.R
 
 
-#Analyse de la qualité des reads de l'ATAC-seq (duplication, contenu en GC, scores de qualité)
+# Analyse de la qualité des reads de l'ATAC-seq (duplication, contenu en GC, scores de qualité)
+
 Script: Quality_check.sh
+
 Données d'entrée: données brutes d'ATAC-seq (fastq)
+
 Fonctions utilisées et output: fastqc --> construit des graphiques montrant notamment le contenu en GC, reads dupliqués et la qualité des bases en fonction de leur position dans le read // multiqc --> compile les résultats de fastqc pour toutes nos données d'ATAC-seq 
 
 
-#Trimming pour enlever les reads de mauvaises qualité et les séquences d'adapteurs
+# Trimming pour enlever les reads de mauvaises qualité et les séquences d'adapteurs
 Remarque: Le trimming n'est pas forcément nécessaire au vu de la qualité de nos reads
 Script: Trimming.sh
 Données d'entrée: données brutes d'ATAC-seq (fastq)
