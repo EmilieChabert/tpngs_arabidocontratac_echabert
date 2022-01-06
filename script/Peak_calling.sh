@@ -20,9 +20,8 @@ macs2 callpeak -t ${ID} -n $name -q 0.01 --outdir ${outputDir} -q 0.01 --nomodel
 done
 #nomodel --> pas le modele du CHIP
 # broad --> regroupe les pics
-#broad cutoff
-#extsize + shift --> zone autour de la 
-#q 
+#broad cutoff --> paramètre pour le regroupement
+#q --> valeur limite pour la détection des pics
 #g --> taille du genome d'Arabidospsis
 
 ##Indexer les fichers filtered.bam pour le visualisation sur IGV
