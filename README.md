@@ -4,7 +4,7 @@ CHABERT Emilie
 
 Objectif: Analyse des états chromatiniens des cellules quiescentes du méristème racinaire apical de Arabidopsis thaliana
 
-Méthode: Récupération des cellules quiescentes de la racine par INTACT, puis réalisation d'une ATAC-seq
+Méthode: Récupération des cellules quiescentes de la racine par INTACT (utilisé car il y a un petit nombre de cellules quiescentes par racine), puis réalisation d'une ATAC-seq
 
 Dans la suite, je présente les fonctions pour le traitement et l'analyse des données d'ATAC-seq.
 
@@ -45,7 +45,7 @@ Script: Trimming.sh
 
 Données d'entrée: données brutes d'ATAC-seq (fastq)
 
-Fonction utilisée et output: Trimmomatic --> deux fichiers de sortie: trimmed.fastq contenant les reads de bonne qualité conservés pour R1 et R2 et unpaired.fastq contenant  les reads non pairés car l'un des reads a été supprimé dans R1 ou R2
+Fonction utilisée et output: Trimmomatic (accessible par java) --> deux fichiers de sortie: trimmed.fastq contenant les reads de bonne qualité conservés pour R1 et R2 et unpaired.fastq contenant  les reads non pairés car l'un des reads a été supprimé dans R1 ou R2
 
 Optionnel: refaire l'analyse de qualité après le trimming pour être sûre que l'on a retiré les séquences de faible qualité
 
@@ -150,7 +150,9 @@ Pour la suite de l'analyse nous avons choisi de sélectionner uniquement les pic
 
 Nous avons sélectionner les pics overlappant avec les gènes, c'est-à-dire présentant une distance égale à 0 (script Analysis_comparison.R). A noter que ce critère sélectionne différents cas de figure: un pic overlappant avec le début, le corps ou la fin du gène. Le mieux serait de sélectionner uniquement les pics se situant proche du TSS. Mais par manque de temps, nous avons continué avec ces données tout en sachant que la sélection était imparfaite
 
-Nous avons utilisé geneontology pour analyser les fonctions des gènes trouvés. Pour comparer, nous avons effectué le même traitement sur les données de racine entière et identifié les gènes présentant des pics non présentant dans les cellules quiescentes
+Nous avons utilisé geneontology pour analyser les fonctions des gènes trouvés. Pour comparer, nous avons effectué le même traitement sur les données de racine entière et identifié les gènes présentant des pics non présentant dans les cellules quiescentes. 
+
+La comparaison de la fonction n'a pas donné de conclusion claire. L'étude de l'expression des gènes où l'on trouve les pics uniques aux cellules quiescentes pourraient donner des résultats intéressants. 
 
 
 
