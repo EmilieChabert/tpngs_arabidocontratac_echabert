@@ -38,13 +38,19 @@ Fonctions utilisées et output: fastqc --> construit des graphiques montrant not
 
 # Trimming pour enlever les reads de mauvaises qualité et les séquences d'adapteurs
 Remarque: Le trimming n'est pas forcément nécessaire au vu de la qualité de nos reads
+
 Script: Trimming.sh
+
 Données d'entrée: données brutes d'ATAC-seq (fastq)
+
 Fonction utilisée et output: Trimmomatic --> nom_trimmed.fastq contenant les reads de bonne qualité conservés pour R1 et R2, nom_unpaired.fastq contenant  les reads non pairés car l'un des reads a été supprimé dans R1 ou R2
+
 Optionnel:refaire l'analyse de qualité après le trimming pour être sûre que l'on a retiré les séquences de faible qualité
 
-#Mappage des reads sur le génome d'A.thaliana
+# Mappage des reads sur le génome d'A.thaliana
+
 Script: Mapping.sh
+
 1. Construction d'un index du génome d'A.thaliana (Arabidopsis_thaliana.TAIR10.dna.toplevel.fa) pour que le mapping soit plus rapide
 Fonction utilisée: bowtie2-build
 
@@ -57,11 +63,15 @@ Remarque: noter les informations qui sont données dans le terminal lorsque la f
 Fonction utilisée: samtools idxstats --> donne le nombre de reads mappant sur les chromosomes ou les génomes mitochondrial et chloroplastique (3ème colonne), ainsi que les reads ne mappant pas correctement (4ème colonne)
 
 
-#Filtrage des reads avec un faible score de mappage, les reads dupliqués, les reads dans les régions non chromosomiques et les régions blacklistées
+# Filtrage des reads avec un faible score de mappage, les reads dupliqués, les reads dans les régions non chromosomiques et les régions blacklistées
+
 Script: Filtering.sh
+
 1. Marquer les duplicats de PCR parmi les reads mappés (nomsorted.bam) avec $PICARD MarkDuplicates
-2. Exclure le génome mitochondrial et chloroplastique du génome de référence A.thaliana en utilisant grep
-3. Filtrer
+
+3. Exclure le génome mitochondrial et chloroplastique du génome de référence A.thaliana en utilisant grep
+
+5. Filtrer
 Données d'entrée: reads mappés avec les duplicats marqués (BAM) + génome nucléaire de référence 
 Fonction utlisée et ouutput: samtools view (fonction permettant de manipuler les fichiers BAM et d'enlever ou conserver certains flags --> ex:1024 = reads dupliqués) --> fichier BAM contenant les reads uniques mappant correctement sur le génome nucléaire de A.thaliana: nomsortedmarked_duplicatesfiltered.bam
 
