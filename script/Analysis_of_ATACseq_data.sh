@@ -9,6 +9,7 @@ outputDir=${workingDir}/processed_data/Analysis
 
 mkdir -p ${outputDir}
 
+#Filtrage du génome
 gtf=${workingDir}/A_thaliana_genome/Arabidopsis_thaliana.TAIR10.51.gtf
 #filtrer les annotations --> genes nucleaires, garder uniquement les genes (tous)
 #extraire le nom du gene
@@ -40,7 +41,7 @@ quiescentname=${quiescent##${workingDir}/processed_data/Peak_calling/}
 quiescentname=${quiescentname%%peaks.broadPeak}
 
 bedtools intersect -a ${quiescent} -b ${racine} -v > ${outputDir}/${quiescentname}${racinename}comparaison.broadpeaks.txt 
-#v --> uniquement les pics present dans a et pas dans b
+#v --> retourne uniquement les pics present dans a et pas dans b
 
 
 # ------------------------------------------------------------------------------------------------------------ #
@@ -74,6 +75,8 @@ bedtools merge -i ${outputDir}/quiescentcells.common.peaks.sorted.txt -c 4 -o "c
 
 bedtools closest -a ${outputDir}/quiescentcells.unique.common.peaks.treated.txt -b ${gtf_filtered} -D a > ${outputDir}/quiescentcells.unique.common.peaks.nearest.genes.txt 
 #-D --> distance genes et pics, precise si le pic est avant ou apres le gene
+
+#Voir script R Analysis_comparison pour la sélection des pics qui overlappent avec les gènes
 
 # ------------------------------------------------------------------------------------------------------------ #
 # --------------------------- Pics uniques au racine entiere  --------------------------- #
