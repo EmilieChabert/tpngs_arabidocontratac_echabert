@@ -16,15 +16,15 @@ Fonctions utilisées: wget lien_internet --> recupère le fichier à cette adres
 
 Les données d'ATAC téléchargées sont:
 * INTACT ATAC-seq data: 2019_006_S6_R1.fastq.gz et 2019_006_S6_R2.fastq.gz
-* ATAC-seq data pour la racine entière : 2020_378_S8_R1.fastq.gz et 2020_378_S8_R2.fastq.gz, 2020_374_S4.corrected.bam
+* ATAC-seq data pour la racine entière : 2020_378_S8_R1.fastq.gz et 2020_378_S8_R2.fastq.gz, 2020_374_S4.corrected.bam (fichier déjà filtré et ajouté car les autres données n'étaient pas de qualité suffisante lors de l'analyse de l'ATAC-seq)
 * ATAC-seq data pour la racine entière publiée: SRR4000472 (SRA)
-Dans la suite "nom" fait référence au nom des fichiers ci-dessus. Par exemple, 2029_006_S6_R
+
 
 Autres fichiers:
 * Génome de référence d'A.thaliana pour le mapping provenant de ENSEMBL database: Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
 * Annotations du génome d'A.thaliana provenant de ENSEMBL database: Arabidopsis_thaliana.TAIR10.51.gtf.gz
 * Régions à conserver lors du filtering (excluant régions pouvant conduire à des artefacts): TAIR10_selectedRegions.bed
-* Script pour l'analyse qualité control de l'ATAC-seq fourni par Alice Hugues: atac_qc.sh,plot_tlen.R, plot_tss_enrich.R
+* Script pour l'analyse qualité control de l'ATAC-seq fourni par Alice Hugues: atac_qc.sh, plot_tlen.R, plot_tss_enrich.R
 
 
 # Analyse de la qualité des reads de l'ATAC-seq (duplication, contenu en GC, scores de qualité)
@@ -35,6 +35,8 @@ Données d'entrée: données brutes d'ATAC-seq (fastq)
 
 Fonctions utilisées et output: fastqc --> construit des graphiques montrant notamment le contenu en GC, reads dupliqués et la qualité des bases en fonction de leur position dans le read // multiqc --> compile les résultats de fastqc pour toutes nos données d'ATAC-seq 
 
+Toutes nos données étaient de qualité satisfaisante à l'exception de SRR4000473 présentant un taux en GC anormal.
+
 
 # Trimming pour enlever les reads de mauvaises qualité et les séquences d'adapteurs
 Remarque: Le trimming n'est pas forcément nécessaire au vu de la qualité de nos reads
@@ -43,15 +45,16 @@ Script: Trimming.sh
 
 Données d'entrée: données brutes d'ATAC-seq (fastq)
 
-Fonction utilisée et output: Trimmomatic --> nom_trimmed.fastq contenant les reads de bonne qualité conservés pour R1 et R2, nom_unpaired.fastq contenant  les reads non pairés car l'un des reads a été supprimé dans R1 ou R2
+Fonction utilisée et output: Trimmomatic --> deux fichiers de sortie: trimmed.fastq contenant les reads de bonne qualité conservés pour R1 et R2 et unpaired.fastq contenant  les reads non pairés car l'un des reads a été supprimé dans R1 ou R2
 
-Optionnel:refaire l'analyse de qualité après le trimming pour être sûre que l'on a retiré les séquences de faible qualité
+Optionnel: refaire l'analyse de qualité après le trimming pour être sûre que l'on a retiré les séquences de faible qualité
 
 # Mappage des reads sur le génome d'A.thaliana
 
 Script: Mapping.sh
 
 1. Construction d'un index du génome d'A.thaliana (Arabidopsis_thaliana.TAIR10.dna.toplevel.fa) pour que le mapping soit plus rapide
+
 Fonction utilisée: bowtie2-build
 
 2. Mapping
